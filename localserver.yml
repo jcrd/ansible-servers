@@ -1,0 +1,8 @@
+- hosts: localserver
+  vars:
+    homedir: "{{ lookup('env', 'HOME') }}"
+    configdir: '{{ homedir }}/.config'
+  roles:
+    - base-packages
+    - dotfiles
+    - transmission

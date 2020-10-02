@@ -1,0 +1,23 @@
+- name: Install base packages
+  dnf:
+    name:
+      - epel-release
+      - git
+      - lm_sensors
+      - openvpn
+      - podman
+      - psmisc
+      - tmux
+      - zsh
+  become: yes
+
+- name: Enable cockpit socket
+  systemd:
+    name: cockpit.socket
+    enabled: yes
+  become: yes
+
+- name: Set zsh as user shell
+  user:
+    name: '{{ ansible_user }}'
+    shell: /usr/bin/zsh

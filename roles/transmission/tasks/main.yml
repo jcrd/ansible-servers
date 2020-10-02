@@ -1,0 +1,43 @@
+- name: Check existence of container
+  command: podman container exists transmission
+  register: container_exists
+  failed_when: container_exists.rc > 1
+
+- name: Create container
+  shell: >
+    podman create --name=transmission \
+    -p 9091:9091 \
+    -p 51413:51413 \
+    -p 51413:51413/udp \
+    -v transmission-config:/config \
+    -v transmission-downloads:/downloads \
+    linuxserver/transmission
+  when: container_exists.rc == 1
+
+- name: Configure firewalld
+  firewalld:
+    port: '{{ item }}'
+    state: enabled
+    immediate: yes
+    permanent: yes
+  loop:
+    - 9091/tcp
+    - 51413/tcp
+    - 51413/udp
+  become: yes
+  when: container_exists.rc == 1
+
+- name: Install systemd service
+  copy:
+    src: transmission.service
+    dest: '{{ configdir }}/systemd/user/transmission.service'
+
+- name: Enable systemd service
+  systemd:
+    name: transmission.service
+    scope: user
+    state: started
+    enabled: yes
+
+- name: Enable loginctl linger
+  command: loginctl enable-linger {{ ansible_user }}
