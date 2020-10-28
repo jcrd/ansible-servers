@@ -4,6 +4,7 @@
       - epel-release
       - git
       - lm_sensors
+      - neovim
       - openvpn
       - podman
       - psmisc
