@@ -22,3 +22,6 @@
   user:
     name: '{{ ansible_user }}'
     shell: /usr/bin/zsh
+
+- name: Enable loginctl linger
+  command: loginctl enable-linger {{ ansible_user }}

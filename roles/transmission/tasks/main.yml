@@ -38,6 +38,3 @@
     scope: user
     state: started
     enabled: yes
-
-- name: Enable loginctl linger
-  command: loginctl enable-linger {{ ansible_user }}
