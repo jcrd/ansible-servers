@@ -1,7 +1,10 @@
+- name: Install epel repo
+  dnf: name=epel-release
+  become: yes
+
 - name: Install base packages
   dnf:
     name:
-      - epel-release
       - git
       - lm_sensors
       - neovim
