@@ -23,8 +23,8 @@
 
 - name: Set zsh as user shell
   user:
-    name: '{{ ansible_user }}'
+    name: '{{ ansible_user_id }}'
     shell: /usr/bin/zsh
 
 - name: Enable loginctl linger
-  command: loginctl enable-linger {{ ansible_user }}
+  command: loginctl enable-linger {{ ansible_user_id }}
