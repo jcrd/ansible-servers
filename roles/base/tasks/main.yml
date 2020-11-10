@@ -7,12 +7,21 @@
     name:
       - git
       - lm_sensors
+      - mosh
       - neovim
       - openvpn
       - podman
       - psmisc
       - tmux
       - zsh
+  become: yes
+
+- name: Configure firewalld for mosh
+  firewalld:
+    port: 60000-61000/udp
+    state: enabled
+    immediate: yes
+    permanent: yes
   become: yes
 
 - name: Enable cockpit socket
