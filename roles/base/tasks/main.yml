@@ -18,6 +18,7 @@
 - name: Enable cockpit socket
   systemd:
     name: cockpit.socket
+    state: started
     enabled: yes
   become: yes
 
