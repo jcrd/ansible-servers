@@ -9,7 +9,6 @@
       - lm_sensors
       - mosh
       - neovim
-      - openvpn
       - podman
       - psmisc
       - tmux
