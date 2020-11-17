@@ -38,3 +38,15 @@
 
 - name: Enable loginctl linger
   command: loginctl enable-linger {{ ansible_user_id }}
+
+- name: Enable sshd pubkey authentication
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    line: 'PubkeyAuthentication yes'
+  become: yes
+
+- name: Create ssh directory with correct permissions
+  file:
+    path: '{{ homedir }}/.ssh'
+    state: directory
+    mode: '0700'
