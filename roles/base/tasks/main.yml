@@ -2,6 +2,7 @@
   dnf:
     name:
       - git
+      - kitty-terminfo
       - lm_sensors
       - mosh
       - neovim
