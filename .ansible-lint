@@ -1,0 +1,6 @@
+# vim: ft=yaml
+
+skip_list:
+  - 'no-changed-when'
+  - 'git-latest'
+  - 'meta-no-info'

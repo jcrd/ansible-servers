@@ -4,10 +4,10 @@
   failed_when: container_exists.rc > 1
 
 - name: Create container
-  shell: >
-    podman create --name=thelounge \
-    -p 9000:9000 \
-    -v thelounge:/var/opt/thelounge \
+  command: >
+    podman create --name=thelounge
+    -p 9000:9000
+    -v thelounge:/var/opt/thelounge
     thelounge/thelounge
   when: container_exists.rc == 1
 
@@ -15,21 +15,22 @@
   firewalld:
     port: '{{ item }}'
     state: enabled
-    immediate: yes
-    permanent: yes
+    immediate: true
+    permanent: true
   loop:
     - 9000/tcp
-  become: yes
+  become: true
   when: container_exists.rc == 1
 
 - name: Install systemd service
   copy:
     src: thelounge.service
     dest: '{{ configdir }}/systemd/user/thelounge.service'
+    mode: 0644
 
 - name: Enable systemd service
   systemd:
     name: thelounge.service
     scope: user
     state: started
-    enabled: yes
+    enabled: true

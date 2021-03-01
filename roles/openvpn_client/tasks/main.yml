@@ -1,29 +1,30 @@
 - name: Install openvpn
   dnf: name=openvpn
-  become: yes
+  become: true
 
 - name: Configure client
   copy:
     src: client.conf
     dest: /etc/openvpn/client/client.conf
-  become: yes
+    mode: 0644
+  become: true
 
 - name: Check existence of credentials
   stat: path=/etc/openvpn/client/credentials.txt
   register: credentials
-  become: yes
+  become: true
 
 - name: Prompt for client username
   pause:
     prompt: 'Input client username'
-    echo: no
+    echo: false
   register: client_username
   when: not credentials.stat.exists
 
 - name: Prompt for client password
   pause:
     prompt: 'Input client password'
-    echo: no
+    echo: false
   register: client_password
   when: not credentials.stat.exists
 
@@ -32,7 +33,7 @@
     src: credentials.txt.j2
     dest: /etc/openvpn/client/credentials.txt
     mode: 0644
-  become: yes
+  become: true
   when:
     - not credentials.stat.exists
     - client_username.user_input | length > 0
@@ -42,5 +43,5 @@
   systemd:
     name: openvpn-client@client.service
     state: started
-    enabled: yes
-  become: yes
+    enabled: true
+  become: true

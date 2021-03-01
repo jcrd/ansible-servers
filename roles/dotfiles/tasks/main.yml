@@ -2,10 +2,10 @@
   git:
     repo: 'https://github.com/jcrd/{{ item.repo }}'
     dest: '{{ configdir }}/{{ item.dest }}'
-    update: no
+    update: false
   loop:
-    - { repo: 'configs', dest: 'configs' }
-    - { repo: 'zsh-config', dest: 'zsh' }
+    - {repo: 'configs', dest: 'configs'}
+    - {repo: 'zsh-config', dest: 'zsh'}
 
 - name: Configure dotfiles
   shell: >

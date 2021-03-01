@@ -1,6 +1,6 @@
 - name: Install epel repo
   dnf: name=epel-release
-  become: yes
+  become: true
 
 - name: Install base packages
   dnf:
@@ -13,28 +13,28 @@
       - psmisc
       - tmux
       - zsh
-  become: yes
+  become: true
 
 - name: Configure firewalld for mosh
   firewalld:
     port: 60000-61000/udp
     state: enabled
-    immediate: yes
-    permanent: yes
-  become: yes
+    immediate: true
+    permanent: true
+  become: true
 
 - name: Enable cockpit socket
   systemd:
     name: cockpit.socket
     state: started
-    enabled: yes
-  become: yes
+    enabled: true
+  become: true
 
 - name: Set zsh as user shell
   user:
     name: '{{ ansible_user_id }}'
     shell: /usr/bin/zsh
-  become: yes
+  become: true
 
 - name: Enable loginctl linger
   command: loginctl enable-linger {{ ansible_user_id }}
@@ -42,11 +42,11 @@
 - name: Enable sshd pubkey authentication
   lineinfile:
     path: /etc/ssh/sshd_config
-    line: 'PubkeyAuthentication yes'
-  become: yes
+    line: 'PubkeyAuthentication true'
+  become: true
 
 - name: Create ssh directory with correct permissions
   file:
     path: '{{ homedir }}/.ssh'
     state: directory
-    mode: '0700'
+    mode: 0700

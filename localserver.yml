@@ -5,6 +5,6 @@
   roles:
     - base
     - dotfiles
-    - openvpn-client
+    - openvpn_client
     - transmission
     - thelounge
