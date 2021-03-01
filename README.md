@@ -1,6 +1,6 @@
-# ansible-centos
+# ansible-localserver
 
-Ansible playbook to set up a local server running CentOS.
+Ansible playbook to set up a local home server.
 
 ## License
 
