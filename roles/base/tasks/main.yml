@@ -42,7 +42,7 @@
 - name: Enable sshd pubkey authentication
   lineinfile:
     path: /etc/ssh/sshd_config
-    line: 'PubkeyAuthentication true'
+    line: 'PubkeyAuthentication yes'
   become: true
 
 - name: Create ssh directory with correct permissions
