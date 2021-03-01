@@ -1,7 +1,3 @@
-- name: Install epel repo
-  dnf: name=epel-release
-  become: true
-
 - name: Install base packages
   dnf:
     name:
@@ -21,13 +17,6 @@
     state: enabled
     immediate: true
     permanent: true
-  become: true
-
-- name: Enable cockpit socket
-  systemd:
-    name: cockpit.socket
-    state: started
-    enabled: true
   become: true
 
 - name: Set zsh as user shell
