@@ -1,7 +1,16 @@
+- name: Enable copr repos
+  command: dnf copr -y enable {{ item }}
+  args:
+    warn: false
+  loop:
+    - jcrd/hdparmify
+  become: true
+
 - name: Install base packages
   dnf:
     name:
       - git
+      - hdparmify
       - kitty-terminfo
       - lm_sensors
       - mosh
