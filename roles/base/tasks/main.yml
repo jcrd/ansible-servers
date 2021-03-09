@@ -11,6 +11,7 @@
     name:
       - git
       - hdparmify
+      - htop
       - kitty-terminfo
       - lm_sensors
       - mosh
