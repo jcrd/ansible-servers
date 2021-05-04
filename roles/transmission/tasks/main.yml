@@ -13,7 +13,7 @@
     -p 51413:51413/udp
     -v transmission-config:/config
     -v transmission-downloads:/downloads
-    linuxserver/transmission
+    docker.io/linuxserver/transmission
   when: container_exists.rc == 1
 
 - name: Configure firewalld
