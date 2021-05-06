@@ -17,6 +17,7 @@
       - mosh
       - neovim
       - podman
+      - progress
       - psmisc
       - tmux
       - zsh
