@@ -19,6 +19,7 @@
       - podman
       - progress
       - psmisc
+      - ranger
       - tmux
       - zsh
   become: true
