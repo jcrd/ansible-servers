@@ -1,0 +1,48 @@
+- name: Check existence of container
+  command: podman container exists plex
+  register: container_exists
+  failed_when: container_exists.rc > 1
+
+- name: Create media directories
+  file:
+    path: '{{ homedir }}/media/{{ item }}'
+    state: directory
+  loop:
+    - movies
+    - shows
+  when: container_exists.rc == 1
+
+- name: Create container
+  command: >
+    podman create --name=plex
+    --network=host
+    -e PLEX_UID=1000
+    -e PLEX_GID=1000
+    -v {{ homedir }}/media:/data:z
+    -v plex-config:/config
+    -v plex-transcode:/transcode
+    docker.io/plexinc/pms-docker
+  when: container_exists.rc == 1
+
+- name: Configure firewalld
+  firewalld:
+    service: plex
+    state: enabled
+    immediate: true
+    permanent: true
+  become: true
+  when: container_exists.rc == 1
+
+- name: Install systemd service
+  copy:
+    src: plex.service
+    dest: '{{ configdir }}/systemd/user/plex.service'
+    mode: 0644
+
+- name: Enable systemd service
+  systemd:
+    name: plex.service
+    scope: user
+    state: started
+    enabled: true
+    daemon_reload: true

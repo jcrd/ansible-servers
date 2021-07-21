@@ -6,4 +6,5 @@
     - base
     - dotfiles
     - openvpn_client
+    - plex
     - transmission

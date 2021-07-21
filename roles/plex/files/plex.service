@@ -1,0 +1,10 @@
+[Unit]
+Description=Plex podman container
+
+[Service]
+ExecStart=/usr/bin/podman start -a plex
+ExecStop=/usr/bin/podman stop -t 10 plex
+Restart=on-failure
+
+[Install]
+WantedBy=default.target
