@@ -27,7 +27,6 @@
     - 51413/tcp
     - 51413/udp
   become: true
-  when: container_exists.rc == 1
 
 - name: Install systemd service
   copy:

@@ -20,7 +20,6 @@
   loop:
     - 9000/tcp
   become: true
-  when: container_exists.rc == 1
 
 - name: Install systemd service
   copy:
