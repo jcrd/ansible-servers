@@ -1,0 +1,10 @@
+[Unit]
+Description=Syncthing podman container
+
+[Service]
+ExecStart=/usr/bin/podman start -a syncthing
+ExecStop=/usr/bin/podman stop -t 10 syncthing
+Restart=on-failure
+
+[Install]
+WantedBy=default.target

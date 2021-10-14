@@ -1,0 +1,44 @@
+- name: Check existence of container
+  command: podman container exists syncthing
+  register: container_exists
+  failed_when: container_exists.rc > 1
+
+- name: Create container
+  command: >
+    podman create --name=syncthing
+    -e PUID=1000
+    -e PGID=1000
+    -p 8384:8384
+    -p 22000:22000/tcp
+    -p 22000:22000/udp
+    -p 21027:21027/udp
+    -v syncthing-config:/config
+    docker.io/linuxserver/syncthing
+  when: container_exists.rc == 1
+
+- name: Configure firewalld
+  firewalld:
+    port: '{{ item }}'
+    state: enabled
+    immediate: true
+    permanent: true
+  loop:
+    - 8384/tcp
+    - 22000/tcp
+    - 22000/udp
+    - 21027/udp
+  become: true
+
+- name: Install systemd service
+  copy:
+    src: syncthing.service
+    dest: '{{ configdir }}/systemd/user/syncthing.service'
+    mode: 0644
+
+- name: Enable systemd service
+  systemd:
+    name: syncthing.service
+    scope: user
+    state: started
+    enabled: true
+    daemon_reload: true
