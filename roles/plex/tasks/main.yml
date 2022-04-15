@@ -3,13 +3,11 @@
   register: container_exists
   failed_when: container_exists.rc > 1
 
-- name: Create media directories
+- name: Create media directory
   file:
-    path: '{{ homedir }}/media/{{ item }}'
+    path: '{{ homedir }}/data/media'
     state: directory
-  loop:
-    - movies
-    - shows
+    mode: 0775
 
 - name: Create container
   command: >
@@ -17,7 +15,7 @@
     --network=host
     -e PLEX_UID=1000
     -e PLEX_GID=1000
-    -v {{ homedir }}/media:/data:z
+    -v {{ homedir }}/data/media:/data/media:z
     -v plex-config:/config
     -v plex-transcode:/transcode
     docker.io/plexinc/pms-docker

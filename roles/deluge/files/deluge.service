@@ -1,0 +1,10 @@
+[Unit]
+Description=Deluge podman container
+
+[Service]
+ExecStart=/usr/bin/podman start -a deluge
+ExecStop=/usr/bin/podman stop -t 10 deluge
+Restart=on-failure
+
+[Install]
+WantedBy=default.target

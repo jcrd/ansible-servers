@@ -1,0 +1,10 @@
+[Unit]
+Description=Radarr podman container
+
+[Service]
+ExecStart=/usr/bin/podman start -a radarr
+ExecStop=/usr/bin/podman stop -t 10 radarr
+Restart=on-failure
+
+[Install]
+WantedBy=default.target

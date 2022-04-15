@@ -1,25 +1,28 @@
 - name: Check existence of container
-  command: podman container exists transmission
+  command: podman container exists deluge
   register: container_exists
   failed_when: container_exists.rc > 1
 
-- name: Create downloads directory
+- name: Create download directories
   file:
-    path: '{{ homedir }}/data/downloads'
+    path: '{{ homedir }}/data/downloads/{{ item }}'
     state: directory
     mode: 0775
+  loop:
+    - complete
+    - movies
 
 - name: Create container
   command: >
-    podman create --name=transmission
+    podman create --name=deluge
     -e PUID=1000
     -e PGID=1000
-    -p 9091:9091
-    -p 51413:51413
-    -p 51413:51413/udp
-    -v transmission-config:/config
+    -p 8112:8112
+    -p 6881:6881
+    -p 6881:6881/udp
+    -v deluge-config:/config
     -v {{ homedir }}/data/downloads:/data/downloads:z
-    docker.io/linuxserver/transmission
+    docker.io/linuxserver/deluge
   when: container_exists.rc == 1
 
 - name: Configure firewalld
@@ -29,20 +32,20 @@
     immediate: true
     permanent: true
   loop:
-    - 9091/tcp
-    - 51413/tcp
-    - 51413/udp
+    - 8112/tcp
+    - 6881/tcp
+    - 6881/udp
   become: true
 
 - name: Install systemd service
   copy:
-    src: transmission.service
-    dest: '{{ configdir }}/systemd/user/transmission.service'
+    src: deluge.service
+    dest: '{{ configdir }}/systemd/user/deluge.service'
     mode: 0644
 
 - name: Enable systemd service
   systemd:
-    name: transmission.service
+    name: deluge.service
     scope: user
     state: started
     enabled: true
