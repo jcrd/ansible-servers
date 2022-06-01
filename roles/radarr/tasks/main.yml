@@ -7,8 +7,7 @@
   file:
     path: '{{ homedir }}/data/media/{{ item }}'
     state: directory
-    # Did not work with 0775 permissions, despite setting PUID & PGID.
-    mode: 0777
+    mode: 0775
   loop:
     - movies
     - shows
