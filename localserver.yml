@@ -1,11 +1,12 @@
 - hosts: localserver
   vars:
     homedir: "{{ lookup('env', 'HOME') }}"
-    configdir: '{{ homedir }}/.config'
+    configdir: "{{ homedir }}/.config"
   roles:
     - base
     - dotfiles
     - deluge
+    - heimdall
     - openvpn_client
     - plex
     - radarr

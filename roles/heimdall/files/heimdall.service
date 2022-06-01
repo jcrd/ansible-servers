@@ -1,0 +1,10 @@
+[Unit]
+Description=Heimdall podman container
+
+[Service]
+ExecStart=/usr/bin/podman start -a heimdall
+ExecStop=/usr/bin/podman stop -t 10 heimdall
+Restart=on-failure
+
+[Install]
+WantedBy=default.target
