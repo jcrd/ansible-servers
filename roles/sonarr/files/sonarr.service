@@ -1,0 +1,10 @@
+[Unit]
+Description=Sonarr podman container
+
+[Service]
+ExecStart=/usr/bin/podman start -a sonarr
+ExecStop=/usr/bin/podman stop -t 10 sonarr
+Restart=on-failure
+
+[Install]
+WantedBy=default.target

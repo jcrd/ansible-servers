@@ -1,5 +1,5 @@
 - name: Check existence of container
-  command: podman container exists radarr
+  command: podman container exists sonarr
   register: container_exists
   failed_when: container_exists.rc > 1
 
@@ -9,17 +9,17 @@
     state: directory
     mode: 0775
   loop:
-    - movies
+    - shows
 
 - name: Create container
   command: >
-    podman create --name=radarr
+    podman create --name=sonarr
     -e PUID=1000
     -e PGID=1000
-    -p 7878:7878
-    -v radarr-config:/config
+    -p 8989:8989
+    -v sonarr-config:/config
     -v {{ homedir }}/data:/data:z
-    docker.io/linuxserver/radarr
+    docker.io/linuxserver/sonarr
   when: container_exists.rc == 1
 
 - name: Configure firewalld
@@ -29,18 +29,18 @@
     immediate: true
     permanent: true
   loop:
-    - 7878/tcp
+    - 8989/tcp
   become: true
 
 - name: Install systemd service
   copy:
-    src: radarr.service
-    dest: '{{ configdir }}/systemd/user/radarr.service'
+    src: sonarr.service
+    dest: '{{ configdir }}/systemd/user/sonarr.service'
     mode: 0644
 
 - name: Enable systemd service
   systemd:
-    name: radarr.service
+    name: sonarr.service
     scope: user
     state: started
     enabled: true

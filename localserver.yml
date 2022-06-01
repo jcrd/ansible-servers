@@ -10,4 +10,5 @@
     - openvpn_client
     - plex
     - radarr
+    - sonarr
     - syncthing
