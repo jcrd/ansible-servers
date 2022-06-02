@@ -8,10 +8,12 @@
     - {repo: 'zsh-config', dest: 'zsh'}
 
 - name: Configure dotfiles
-  shell: >
+  shell: |
     cd {{ configdir }}/{{ item }} &&
     source ../zsh/zshenv &&
     ./configure
+  args:
+    executable: /usr/bin/zsh
   loop:
     - configs
     - zsh
