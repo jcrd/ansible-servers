@@ -1,40 +1,24 @@
-- name: Enable copr repos
-  command: dnf copr -y enable {{ item }}
-  args:
-    warn: false
-  loop:
-    - jcrd/hdparmify
+- name: Install epel-release
+  dnf: name=epel-release
   become: true
 
 - name: Install base packages
   dnf:
     name:
       - git
-      - hdparmify
       - htop
-      - kitty-terminfo
       - lm_sensors
-      - mosh
       - neovim
       - podman
-      - progress
       - psmisc
       - ranger
       - tmux
       - zsh
   become: true
 
-- name: Configure firewalld for mosh
-  firewalld:
-    port: 60000-61000/udp
-    state: enabled
-    immediate: true
-    permanent: true
-  become: true
-
 - name: Set zsh as user shell
   user:
-    name: '{{ ansible_user_id }}'
+    name: "{{ ansible_user_id }}"
     shell: /usr/bin/zsh
   become: true
 
@@ -44,11 +28,16 @@
 - name: Enable sshd pubkey authentication
   lineinfile:
     path: /etc/ssh/sshd_config
-    line: 'PubkeyAuthentication yes'
+    line: "PubkeyAuthentication yes"
   become: true
 
 - name: Create ssh directory with correct permissions
   file:
-    path: '{{ homedir }}/.ssh'
+    path: "{{ homedir }}/.ssh"
     state: directory
     mode: 0700
+
+- name: Create systemd user directory
+  file:
+    path: "{{ configdir }}/systemd/user"
+    state: directory
