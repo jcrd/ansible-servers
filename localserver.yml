@@ -7,6 +7,7 @@
     - dotfiles
     - deluge
     - heimdall
+    - kitty
     - openvpn_client
     - plex
     - radarr
