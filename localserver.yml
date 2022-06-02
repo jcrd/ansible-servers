@@ -13,3 +13,5 @@
     - radarr
     - sonarr
     - syncthing
+    # Run after media setup
+    - podman

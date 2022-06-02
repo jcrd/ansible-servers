@@ -1,0 +1,2 @@
+- name: Set ownership of media data directory
+  shell: podman unshare chown -R 1000:1000 {{ homedir }}/data
