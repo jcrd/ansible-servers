@@ -11,6 +11,7 @@
   loop:
     - complete
     - movies
+    - shows
 
 - name: Create container
   command: >
