@@ -2,14 +2,13 @@
   vars:
     homedir: "{{ lookup('env', 'HOME') }}"
     configdir: "{{ homedir }}/.config"
+    mediadir: "{{ homedir }}/media"
   roles:
     - base
     - dotfiles
-    - deluge
     - heimdall
     - kitty
     - openvpn_client
     - plex
+    - qbittorrent
     - syncthing
-    # Run after media setup
-    - podman

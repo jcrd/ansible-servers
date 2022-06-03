@@ -6,8 +6,9 @@
 - name: Create container
   command: >
     podman create --name=syncthing
-    -e PUID=1000
-    -e PGID=1000
+    --userns=""
+    -e PUID=0
+    -e PGID=0
     -p 8384:8384
     -p 22000:22000/tcp
     -p 22000:22000/udp

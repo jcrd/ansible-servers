@@ -5,19 +5,19 @@
 
 - name: Create media directory
   file:
-    path: '{{ homedir }}/data/media'
+    path: '{{ mediadir }}'
     state: directory
-    mode: 0775
 
 - name: Create container
   command: >
     podman create --name=plex
     --network=host
-    -e PLEX_UID=1000
-    -e PLEX_GID=1000
-    -v {{ homedir }}/data/media:/data/media:z
+    --userns=""
+    -e PLEX_UID=0
+    -e PLEX_GID=0
     -v plex-config:/config
     -v plex-transcode:/transcode
+    -v {{ mediadir }}:/media:z
     docker.io/plexinc/pms-docker
   when: container_exists.rc == 1
 

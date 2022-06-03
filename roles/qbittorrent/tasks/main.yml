@@ -1,29 +1,31 @@
 - name: Check existence of container
-  command: podman container exists deluge
+  command: podman container exists qbittorrent
   register: container_exists
   failed_when: container_exists.rc > 1
 
-- name: Create download directories
+- name: Create media directories
   file:
-    path: '{{ homedir }}/data/downloads/{{ item }}'
+    path: '{{ mediadir }}/{{ item }}'
     state: directory
-    mode: 0775
   loop:
-    - complete
+    - downloading
+    - completed
     - movies
     - shows
 
 - name: Create container
   command: >
-    podman create --name=deluge
-    -e PUID=1000
-    -e PGID=1000
-    -p 8112:8112
+    podman create --name=qbittorrent
+    --userns=""
+    -e PUID=0
+    -e PGID=0
+    -e WEBUI_PORT=8080
+    -p 8080:8080
     -p 6881:6881
     -p 6881:6881/udp
-    -v deluge-config:/config
-    -v {{ homedir }}/data/downloads:/data/downloads:z
-    docker.io/linuxserver/deluge
+    -v qbittorrent-config:/config
+    -v {{ mediadir }}:/media:z
+    docker.io/linuxserver/qbittorrent
   when: container_exists.rc == 1
 
 - name: Configure firewalld
@@ -33,20 +35,20 @@
     immediate: true
     permanent: true
   loop:
-    - 8112/tcp
+    - 8080/tcp
     - 6881/tcp
     - 6881/udp
   become: true
 
 - name: Install systemd service
   copy:
-    src: deluge.service
-    dest: '{{ configdir }}/systemd/user/deluge.service'
+    src: qbittorrent.service
+    dest: '{{ configdir }}/systemd/user/qbittorrent.service'
     mode: 0644
 
 - name: Enable systemd service
   systemd:
-    name: deluge.service
+    name: qbittorrent.service
     scope: user
     state: started
     enabled: true

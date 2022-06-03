@@ -6,8 +6,6 @@
 - name: Create container
   command: >
     podman create --name=heimdall
-    -e PUID=1000
-    -e PGID=1000
     -p 80:80
     -p 443:443
     -v heimdall-config:/config
