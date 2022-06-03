@@ -18,15 +18,13 @@
 
 - name: Configure firewalld
   firewalld:
-    port: '{{ item }}'
+    service: "{{ item }}"
     state: enabled
     immediate: true
     permanent: true
   loop:
-    - 8384/tcp
-    - 22000/tcp
-    - 22000/udp
-    - 21027/udp
+    - syncthing
+    - syncthing-gui
   become: true
 
 - name: Install systemd service
