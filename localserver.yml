@@ -10,8 +10,6 @@
     - kitty
     - openvpn_client
     - plex
-    - radarr
-    - sonarr
     - syncthing
     # Run after media setup
     - podman
