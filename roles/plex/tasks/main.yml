@@ -42,3 +42,8 @@
     state: started
     enabled: true
     daemon_reload: true
+
+- name: Install easymode config
+  copy:
+    src: plex.yml
+    dest: "{{ easymodeconfig }}"

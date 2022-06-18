@@ -53,3 +53,8 @@
     state: started
     enabled: true
     daemon_reload: true
+
+- name: Install easymode config
+  copy:
+    src: qbittorrent.yml
+    dest: "{{ easymodeconfig }}/"

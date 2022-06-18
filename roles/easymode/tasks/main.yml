@@ -1,15 +1,16 @@
 - name: Check existence of container
-  command: podman container exists heimdall
+  command: podman container exists easymode
   register: container_exists
   failed_when: container_exists.rc > 1
 
 - name: Create container
   command: >
-    podman create --name=heimdall
+    podman create --name=easymode
     -p 80:80
-    -p 443:443
-    -v heimdall-config:/config
-    docker.io/linuxserver/heimdall
+    -e EASYMODE_HOSTNAME={{ ansible_hostname }}
+    -e EASYMODE_IP={{ hostip }}
+    -v {{ easymodeconfig }}:/config:z
+    docker.io/supplantr/easymode
   when: container_exists.rc == 1
 
 - name: Configure sysctl
@@ -29,18 +30,17 @@
     permanent: true
   loop:
     - 80/tcp
-    - 443/tcp
   become: true
 
 - name: Install systemd service
   copy:
-    src: heimdall.service
-    dest: '{{ configdir }}/systemd/user/heimdall.service'
+    src: easymode.service
+    dest: '{{ configdir }}/systemd/user/easymode.service'
     mode: 0644
 
 - name: Enable systemd service
   systemd:
-    name: heimdall.service
+    name: easymode.service
     scope: user
     state: started
     enabled: true

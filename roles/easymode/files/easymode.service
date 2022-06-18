@@ -1,0 +1,10 @@
+[Unit]
+Description=easymode podman container
+
+[Service]
+ExecStart=/usr/bin/podman start -a easymode
+ExecStop=/usr/bin/podman stop -t 10 easymode
+Restart=on-failure
+
+[Install]
+WantedBy=default.target
