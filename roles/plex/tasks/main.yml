@@ -46,4 +46,4 @@
 - name: Install easymode config
   copy:
     src: plex.yml
-    dest: "{{ easymodeconfig }}"
+    dest: "{{ easymodeconfig }}/"
