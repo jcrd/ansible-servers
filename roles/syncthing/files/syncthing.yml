@@ -1,3 +1,3 @@
-- name: syncthing
-  url: 8384
-  icon: sync
+name: syncthing
+url: 8384
+icon: sync
