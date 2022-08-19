@@ -12,7 +12,6 @@
   roles:
     - base
     - dotfiles
-    - kitty
     - openvpn_client
     - plex
     - qbittorrent
