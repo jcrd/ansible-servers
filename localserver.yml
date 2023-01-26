@@ -13,7 +13,7 @@
     - base
     - dotfiles
     - openvpn_client
-    - plex
+    - jellyfin
     - qbittorrent
     - syncthing
     - easymode

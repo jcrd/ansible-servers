@@ -1,29 +1,24 @@
 - name: Check existence of container
-  command: podman container exists plex
+  command: podman container exists jellyfin
   register: container_exists
   failed_when: container_exists.rc > 1
 
 - name: Create media directory
   file:
-    path: '{{ mediadir }}'
+    path: "{{ mediadir }}"
     state: directory
 
 - name: Create container
   command: >
-    podman create --name=plex
-    --network=host
-    --userns=""
-    -e PLEX_UID=0
-    -e PLEX_GID=0
-    -v plex-config:/config
-    -v plex-transcode:/transcode
-    -v {{ mediadir }}:/media:z
-    docker.io/plexinc/pms-docker
+    podman create --name=jellyfin -e PUID=1000 -e PGID=1000 -p 8096:8096 -p
+    8920:8920 -p 7359:7359/udp -p 1900:1900/udp -v jellyfin-config:/config -v {{
+    mediadir }}/shows:/media/shows -v {{ mediadir }}/movies:/media/movies
+    lscr.io/linuxserver/jellyfin:latest
   when: container_exists.rc == 1
 
 - name: Configure firewalld
   firewalld:
-    service: plex
+    service: jellyfin
     state: enabled
     immediate: true
     permanent: true
@@ -31,13 +26,13 @@
 
 - name: Install systemd service
   copy:
-    src: plex.service
-    dest: '{{ configdir }}/systemd/user/plex.service'
+    src: jellyfin.service
+    dest: "{{ configdir }}/systemd/user/jellyfin.service"
     mode: 0644
 
 - name: Enable systemd service
   systemd:
-    name: plex.service
+    name: jellyfin.service
     scope: user
     state: started
     enabled: true
@@ -45,5 +40,5 @@
 
 - name: Install easymode config
   copy:
-    src: plex.yml
+    src: jellyfin.yml
     dest: "{{ easymodeconfig }}/"

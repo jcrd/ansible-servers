@@ -1,0 +1,10 @@
+[Unit]
+Description=Jellyfin podman container
+
+[Service]
+ExecStart=/usr/bin/podman start -a jellyfin
+ExecStop=/usr/bin/podman stop -t 10 jellyfin
+Restart=on-failure
+
+[Install]
+WantedBy=default.target
