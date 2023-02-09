@@ -1,0 +1,9 @@
+#!/bin/sh
+
+config="$HOME"/.config/rclone-sync.conf
+
+for conf in "$(iniq -o "$config")"; do
+    eval "$conf"
+    echo "Syncing $section..."
+    rclone sync "$src" "$dest"
+done

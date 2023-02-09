@@ -1,0 +1,42 @@
+- name: Enable iniq copr repo
+  shell: dnf copr enable -y jcrd/iniq
+  become: true
+
+- name: Install packages
+  dnf:
+    name:
+      - iniq
+      - rclone
+  become: true
+
+- name: Update rclone
+  shell: rclone selfupdate
+  become: true
+
+- name: Install rclone-sync script
+  copy:
+    src: rclone-sync
+    dest: /usr/bin/
+    mode: preserve
+  become: true
+
+- name: Install rclone-sync conf
+  copy:
+    src: rclone-sync.conf
+    dest: "{{ configdir }}/"
+
+- name: Install systemd units
+  copy:
+    src: "{{ item }}"
+    dest: "{{ configdir }}/systemd/user/"
+    mode: 0644
+  loop:
+    - rclone-sync.service
+    - rclone-sync.timer
+
+- name: Enable systemd timer
+  systemd:
+    name: rclone-sync.timer
+    scope: user
+    enabled: true
+    daemon_reload: true

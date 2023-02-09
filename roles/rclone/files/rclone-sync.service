@@ -1,0 +1,6 @@
+[Unit]
+Description=rclone-sync
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/rclone-sync

@@ -15,5 +15,6 @@
     - openvpn_client
     - jellyfin
     - qbittorrent
+    - rclone
     - syncthing
     - easymode
