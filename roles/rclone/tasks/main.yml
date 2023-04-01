@@ -1,5 +1,5 @@
 - name: Enable iniq copr repo
-  shell: dnf copr enable -y jcrd/iniq
+  command: dnf copr enable -y jcrd/iniq
   become: true
 
 - name: Install packages
@@ -10,7 +10,7 @@
   become: true
 
 - name: Update rclone
-  shell: rclone selfupdate
+  command: rclone selfupdate
   become: true
 
 - name: Install rclone-sync script
