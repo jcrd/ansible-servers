@@ -12,6 +12,7 @@
       - git
       - htop
       - lm_sensors
+      - make
       - neovim
       - podman
       - psmisc
