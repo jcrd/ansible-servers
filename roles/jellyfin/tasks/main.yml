@@ -42,3 +42,4 @@
   copy:
     src: jellyfin.yml
     dest: "{{ easymodeconfig }}/"
+  when: easymodeconfig is defined

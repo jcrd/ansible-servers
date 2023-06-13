@@ -58,3 +58,4 @@
   copy:
     src: qbittorrent.yml
     dest: "{{ easymodeconfig }}/"
+  when: easymodeconfig is defined

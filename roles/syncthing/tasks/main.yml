@@ -46,3 +46,4 @@
   copy:
     src: syncthing.yml
     dest: "{{ easymodeconfig }}/"
+  when: easymodeconfig is defined

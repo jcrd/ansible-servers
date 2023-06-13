@@ -58,3 +58,4 @@
   copy:
     src: cockpit.yml
     dest: "{{ easymodeconfig }}/"
+  when: easymodeconfig is defined
