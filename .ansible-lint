@@ -1,6 +1,7 @@
 # vim: ft=yaml
 
 skip_list:
+  - 'fqcn-builtins'
   - 'no-changed-when'
   - 'git-latest'
   - 'meta-no-info'
