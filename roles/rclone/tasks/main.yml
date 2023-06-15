@@ -16,7 +16,7 @@
 - name: Install rclone-sync script
   copy:
     src: rclone-sync
-    dest: /usr/bin/
+    dest: /usr/local/bin/
     mode: preserve
   become: true
 

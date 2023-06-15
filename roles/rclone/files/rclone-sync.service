@@ -3,4 +3,4 @@ Description=rclone-sync
 
 [Service]
 Type=oneshot
-ExecStart=/usr/bin/rclone-sync
+ExecStart=/usr/local/bin/rclone-sync
