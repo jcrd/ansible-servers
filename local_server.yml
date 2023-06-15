@@ -11,6 +11,7 @@
     easymodeconfig: "{{ homedir }}/.easymode-config"
   roles:
     - base
+    - cockpit
     - dotfiles
     - openvpn_client
     - jellyfin

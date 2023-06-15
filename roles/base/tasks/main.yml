@@ -41,15 +41,3 @@
   file:
     path: "{{ configdir }}/systemd/user"
     state: directory
-
-- name: Enable cockpit
-  systemd:
-    name: cockpit.socket
-    state: started
-    enabled: true
-
-- name: Install cockpit easymode config
-  copy:
-    src: cockpit.yml
-    dest: "{{ easymodeconfig }}/"
-  when: easymodeconfig is defined
