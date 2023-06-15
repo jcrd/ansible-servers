@@ -2,10 +2,6 @@
   dnf: name=epel-release
   become: true
 
-- name: Enable toolboxcutter copr repo
-  command: dnf copr enable -y jcrd/toolboxcutter
-  become: true
-
 - name: Install base packages
   dnf:
     name:
@@ -18,7 +14,6 @@
       - psmisc
       - ranger
       - tmux
-      - toolboxcutter
       - zsh
   become: true
 
