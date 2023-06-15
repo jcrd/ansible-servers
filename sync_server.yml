@@ -1,0 +1,8 @@
+- hosts: sync_server
+  vars:
+    homedir: "{{ lookup('env', 'HOME') }}"
+    configdir: "{{ homedir }}/.config"
+  roles:
+    - base
+    - rclone
+    - syncthing

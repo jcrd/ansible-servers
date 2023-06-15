@@ -1,4 +1,8 @@
-localserver:
-	ansible-playbook --ask-pass --ask-become-pass localserver.yml
+local_server:
+	ansible-playbook --ask-pass --ask-become-pass local_server.yml
 
-.PHONY: localserver
+# Expects passwordless SSH login.
+sync_server:
+	ansible-playbook sync_server.yml
+
+.PHONY: local_server sync_server

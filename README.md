@@ -1,6 +1,6 @@
-# ansible-localserver
+# ansible-servers
 
-Ansible playbook to set up a local home server.
+Ansible playbooks to set up personal servers.
 
 ## License
 
